@@ -1,9 +1,6 @@
 # Python 3 server example
 from http.server import BaseHTTPRequestHandler, HTTPServer
-import time
-
-hostName = "localhost"
-serverPort = 8080
+import sys
 
 class MyServer(BaseHTTPRequestHandler):
     def do_GET(self):
@@ -17,8 +14,14 @@ class MyServer(BaseHTTPRequestHandler):
         self.wfile.write(bytes("</body></html>", "utf-8"))
 
 if __name__ == "__main__":
-    webServer = HTTPServer((hostName, serverPort), MyServer)
-    print("Server started http://%s:%s" % (hostName, serverPort))
+    if len(sys.argv) != 2:
+        print("Usage: python script.py <port>")
+        sys.exit(1)
+
+    port = int(sys.argv[1])
+
+    webServer = HTTPServer(("localhost", port), MyServer)
+    print(f"Server started http://localhost:{port}")
 
     try:
         webServer.serve_forever()
