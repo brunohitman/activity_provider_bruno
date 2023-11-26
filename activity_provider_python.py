@@ -1,8 +1,9 @@
 from flask import Flask
+app = Flask(__name__)
 
-Flask(__name__).get('/')
+@app.get('/')
 def hello_world():
     return 'Hello, World!'
 
 if __name__ == '__main__':
-    Flask(__name__).run()
+    app.run()
