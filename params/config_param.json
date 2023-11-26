@@ -1,0 +1,5 @@
+[
+{"name": "nomeAtividade", "type": "text/plain"},
+{"name": "livroParaLer", "type": "text/plain"},
+{"name": "videoParaAssistir", "type": "text/plain"}
+] 
