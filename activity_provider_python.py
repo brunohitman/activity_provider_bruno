@@ -11,7 +11,7 @@ def home():
     return render_template('home.html')
 
 # Rota para trazer o JSON de config_param.json
-@app.route('/json-params-atividade')
+@app.route('/parametros_atividade')
 def json_params_atividade():
     try:
         with open('params/config_param.json') as json_file:
@@ -21,14 +21,24 @@ def json_params_atividade():
         return jsonify({'status': 'error', 'message': 'Erro ao obter o JSON', 'error': str(e)}), 500
 
 # Rota para trazer o JSON de analytics_url.json
-@app.route('/list_analytics')
+@app.route('/parametros_analiticas')
 def list_analytics():
     try:
-        with open('analytics/analytics_url.json') as json_file:
+        with open('params/analytics_url.json') as json_file:
             data = json.load(json_file)
             return jsonify(data)
     except Exception as e:
-        return jsonify({'status': 'error', 'message': 'Erro ao obter o JSON de analytics', 'error': str(e)}), 500
+        return jsonify({'status': 'error', 'message': 'Erro ao obter o analytics_url.json', 'error': str(e)}), 500
+
+# Rota para trazer o JSON de analytics_list_url.json
+@app.route('/analiticas')
+def analytics():
+    try:
+        with open('analytics/analytics_list_url.json') as json_file:
+            data = json.load(json_file)
+            return jsonify(data)
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': 'Erro ao obter o analytics_url.json', 'error': str(e)}), 500
 
 # Rota dinâmica que chama a função do GET.py ou do POST.py
 @app.route('/<path:path>', methods=['GET', 'POST'])
