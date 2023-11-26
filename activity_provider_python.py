@@ -1,4 +1,5 @@
 from flask import Flask, render_template, jsonify, send_from_directory
+import json
 from GET import get_example  # Importa a função get_example do GET.py
 from POST import post_example  # Importa a função post_example do POST.py
 
@@ -13,7 +14,9 @@ def home():
 @app.route('/json-params-atividade')
 def json_params_atividade():
     try:
-        return send_from_directory('params', 'config_param.json', as_attachment=True)
+        with open('params/config_param.json') as json_file:
+            data = json.load(json_file)
+            return jsonify(data)
     except Exception as e:
         return jsonify({'status': 'error', 'message': 'Erro ao obter o JSON', 'error': str(e)}), 500
 
@@ -21,7 +24,9 @@ def json_params_atividade():
 @app.route('/list_analytics')
 def list_analytics():
     try:
-        return send_from_directory('analytics', 'analytics_url.json', as_attachment=True)
+        with open('analytics/analytics_url.json') as json_file:
+            data = json.load(json_file)
+            return jsonify(data)
     except Exception as e:
         return jsonify({'status': 'error', 'message': 'Erro ao obter o JSON de analytics', 'error': str(e)}), 500
 
