@@ -38,7 +38,7 @@ def analytics():
             data = json.load(json_file)
             return jsonify(data)
     except Exception as e:
-        return jsonify({'status': 'error', 'message': 'Erro ao obter o analytics_url.json', 'error': str(e)}), 500
+        return jsonify({'status': 'error', 'message': 'Erro ao obter o analytics_list_url.json', 'error': str(e)}), 500
 
 # Rota dinâmica que chama a função do GET.py ou do POST.py
 @app.route('/<path:path>', methods=['GET', 'POST'])
