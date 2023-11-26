@@ -17,6 +17,14 @@ def json_params_atividade():
     except Exception as e:
         return jsonify({'status': 'error', 'message': 'Erro ao obter o JSON', 'error': str(e)}), 500
 
+# Rota para trazer o JSON de analytics_url.json
+@app.route('/list_analytics')
+def list_analytics():
+    try:
+        return send_from_directory('analytics', 'analytics_url.json', as_attachment=True)
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': 'Erro ao obter o JSON de analytics', 'error': str(e)}), 500
+
 # Rota dinâmica que chama a função do GET.py ou do POST.py
 @app.route('/<path:path>', methods=['GET', 'POST'])
 def dynamic_route(path):
