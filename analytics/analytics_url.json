@@ -1,0 +1,9 @@
+{
+"qualAnalytics": [
+{"name": "livroParaLer", "type": "text/plain"},
+{"name": "videoParaAssistir", "type": "text/plain"},
+{"name": "deadline", "type": "text/plain"},
+{"name": "completed", "type": "boolean"},
+{"name": "completionDate", "type": "text/plain"}
+]
+}
