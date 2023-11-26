@@ -2,7 +2,8 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-@app.route('https://activity-provider-bruno.onrender.com', methods=['POST'])
+# Rota para requisições POST
+@app.route('/POST', methods=['POST'])
 def post_example():
     try:
         # Recebe os dados do corpo da requisição POST
