@@ -41,16 +41,12 @@ def analytics():
         return jsonify({'status': 'error', 'message': 'Erro ao obter o analytics_list_url.json', 'error': str(e)}), 500
 
 # Rota dinâmica que chama a função do GET.py ou do POST.py
-@app.route('/<path:path>', methods=['GET', 'POST'])
-def dynamic_route(path):
-    if path == 'GET':
+@app.route('/endpoint', methods=['GET', 'POST'])
+def handle_request():
+    if request.method == 'GET':
         return get_example()
-    elif path == 'POST':
+    elif request.method == 'POST':
         return post_example()
-    elif path == 'config_url.html':
-        return render_template('config_url.html')
-    else:
-        return jsonify({'status': 'error', 'message': 'Rota não encontrada'}), 404
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
