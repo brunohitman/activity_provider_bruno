@@ -1,7 +1,7 @@
 from flask import Flask, render_template, jsonify, send_from_directory
 import json
 from GET import get_example
-from POST import handle_post_request
+from POST import handle_post_request as post_request
 
 app = Flask(__name__)
 
@@ -43,7 +43,7 @@ def analytics():
 # Rota específica para lidar com requisições POST
 @app.route('/analiticas', methods=['POST'])
 def handle_post_request():
-    return handle_post_request()
+    return post_request()
 
 # Rota para configurar a atividade
 @app.route('/config_url.html')
