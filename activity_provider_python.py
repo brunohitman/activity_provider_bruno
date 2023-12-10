@@ -42,11 +42,15 @@ def analytics():
 
 # Rota dinâmica que chama a função do GET.py ou do POST.py
 @app.route('/<path:path>', methods=['GET', 'POST'])
-def handle_request():
-    if request.method == 'GET':
+def dynamic_route(path):
+    if path == 'GET':
         return get_example()
-    elif request.method == 'POST':
+    elif path == 'POST':
         return post_example()
+    elif path == 'config_url.html':
+        return render_template('config_url.html')
+    else:
+        return jsonify({'status': 'error', 'message': 'Rota não encontrada'}), 404
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
