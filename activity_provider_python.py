@@ -1,6 +1,6 @@
 from flask import Flask, render_template, jsonify, send_from_directory
 import json
-from GET import get_example
+from GET import get_example as get_request
 from POST import post_example as post_request
 
 app = Flask(__name__)
@@ -40,8 +40,13 @@ def analytics():
     except Exception as e:
         return jsonify({'status': 'error', 'message': 'Erro ao obter o analytics_list_url.json', 'error': str(e)}), 500
 
+# Rota específica para lidar com requisições GET
+@app.route('/GET', methods=['GET'])
+def get_saved_data():
+    return get_request()
+
 # Rota específica para lidar com requisições POST
-@app.route('/analiticas', methods=['POST'])
+@app.route('/POST', methods=['POST'])
 def handle_post_request():
     return post_request()
 
