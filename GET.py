@@ -4,7 +4,9 @@ from flask import jsonify
 def get_example():
     try:
         # Lógica de processamento para requisições GET
-        result = {'status': 'success', 'message': 'Requisição GET bem-sucedida!'}
+        with open('dados_analytics.json') as json_file:
+            data = json.load(json_file)
+            result = {'status': 'success', 'message': 'Requisição GET bem-sucedida!', 'data': data}
         
         # Retorna a resposta como JSON
         return jsonify(result), 200
