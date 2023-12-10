@@ -1,7 +1,7 @@
 from flask import Flask, render_template, jsonify, send_from_directory
 import json
 from GET import get_example
-from POST import handle_post_request as post_request
+from POST import post_example as post_request
 
 app = Flask(__name__)
 
