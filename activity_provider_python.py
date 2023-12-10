@@ -41,7 +41,7 @@ def analytics():
         return jsonify({'status': 'error', 'message': 'Erro ao obter o analytics_list_url.json', 'error': str(e)}), 500
 
 # Rota dinâmica que chama a função do GET.py ou do POST.py
-@app.route('/endpoint', methods=['GET', 'POST'])
+@app.route('/<path:path>', methods=['GET', 'POST'])
 def handle_request():
     if request.method == 'GET':
         return get_example()
