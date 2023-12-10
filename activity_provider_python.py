@@ -1,7 +1,7 @@
 from flask import Flask, render_template, jsonify, send_from_directory
 import json
-from GET import get_example  # Importa a função get_example do GET.py
-from POST import post_example  # Importa a função post_example do POST.py
+from GET import get_example
+from POST import handle_post_request
 
 app = Flask(__name__)
 
@@ -40,17 +40,15 @@ def analytics():
     except Exception as e:
         return jsonify({'status': 'error', 'message': 'Erro ao obter o analytics_list_url.json', 'error': str(e)}), 500
 
-# Rota dinâmica que chama a função do GET.py ou do POST.py
-@app.route('/<path:path>', methods=['GET', 'POST'])
-def dynamic_route(path):
-    if path == 'GET':
-        return get_example()
-    elif path == 'POST':
-        return post_example()
-    elif path == 'config_url.html':
-        return render_template('config_url.html')
-    else:
-        return jsonify({'status': 'error', 'message': 'Rota não encontrada'}), 404
+# Rota específica para lidar com requisições POST
+@app.route('/analiticas', methods=['POST'])
+def handle_post_request():
+    return handle_post_request()
+
+# Rota para configurar a atividade
+@app.route('/config_url.html')
+def config_url():
+    return render_template('config_url.html')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
