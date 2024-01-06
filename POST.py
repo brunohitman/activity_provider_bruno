@@ -1,31 +1,66 @@
 from flask import Flask, request, jsonify
-from builder import AnalyticsBuilder
+import psycopg2
 import json
 
 app = Flask(__name__)
 
-# Rota para requisições POST
+def create_table_if_not_exists():
+    # Conectar ao banco de dados
+    conn = psycopg2.connect("postgres://db_activity_provider_user:L8hE1UxGVmADUsMARVKDB4CXoFdKMzu9@dpg-cmcsdq021fec73cub2f0-a.oregon-postgres.render.com/db_activity_provider")
+    
+    # Criar um cursor para executar comandos SQL
+    cursor = conn.cursor()
+    
+    # Comando SQL para criar tabela
+    create_table_query = """
+    CREATE TABLE IF NOT EXISTS Relatorios_Analiticos_Recebidos (
+        id SERIAL PRIMARY KEY,
+        name TEXT NOT NULL,
+        type TEXT NOT NULL
+    );
+    """
+    
+    # Executar o comando SQL
+    cursor.execute(create_table_query)
+    
+    # Confirmar a execução do comando
+    conn.commit()
+    
+    # Fechar o cursor e a conexão
+    cursor.close()
+    conn.close()
+
 @app.route('/POST', methods=['POST'])
 def post_example():
     try:
-        # Recebe os dados do corpo da requisição POST
+        # Verificar e criar tabela se não existir
+        create_table_if_not_exists()
+        
+        # Receber dados do corpo da requisição POST
         data = request.json
 
-        # Use o Builder para construir os dados
-        builder = AnalyticsBuilder()
+        # Conectar ao banco de dados
+        conn = psycopg2.connect("postgres://db_activity_provider_user:L8hE1UxGVmADUsMARVKDB4CXoFdKMzu9@dpg-cmcsdq021fec73cub2f0-a.oregon-postgres.render.com/db_activity_provider")
+        
+        # Criar um cursor para inserir dados
+        cursor = conn.cursor()
+        
+        # Inserir cada registro na tabela
         for analytics_data in data['qualAnalytics']:
-            builder.add_data(analytics_data['name'], analytics_data['type'])
+            cursor.execute("INSERT INTO Relatorios_Analiticos_Recebidos (name, type) VALUES (%s, %s)", (analytics_data['name'], analytics_data['type']))
+        
+        # Confirmar a inserção dos dados
+        conn.commit()
+        
+        # Fechar o cursor e a conexão
+        cursor.close()
+        conn.close()
 
-        built_data = builder.get_built_data()
-
-        # Faça algo com os dados construídos, como salvá-los em um arquivo
-        with open('dados_analytics.json', 'w') as json_file:
-            json.dump(built_data, json_file)
-
-        result = {'status': 'success', 'message': 'Dados recebidos e salvos com sucesso!', 'data': built_data}
-
+        result = {'status': 'success', 'message': 'Dados recebidos e salvos com sucesso!'}
+        
         # Retorna a resposta como JSON
         return jsonify(result), 200
+    
     except Exception as e:
         # Em caso de erro, retorna uma resposta de erro
         error_message = str(e)
@@ -33,5 +68,4 @@ def post_example():
         return jsonify(result), 500
 
 if __name__ == '__main__':
-    # O host '0.0.0.0' significa que o servidor estará acessível externamente
     app.run(host='0.0.0.0', port=8080)

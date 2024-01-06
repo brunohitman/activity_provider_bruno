@@ -2,6 +2,8 @@ from flask import Flask, render_template, jsonify, send_from_directory
 import json
 from GET import get_example as get_request
 from POST import post_example as post_request
+import psycopg2
+from data_fetcher import fetch_data_from_db
 
 app = Flask(__name__)
 
@@ -54,6 +56,21 @@ def handle_post_request():
 @app.route('/config_url.html')
 def config_url():
     return render_template('config_url.html')
+
+@app.route('/consultar_analiticas', methods=['GET'])
+def consultar_analiticas():
+    try:
+        # Buscar dados do banco
+        data = fetch_data_from_db()
+
+        if data:
+            return render_template('resultado_analiticas.html', data=data)
+        else:
+            return jsonify({'status': 'error', 'message': 'Nenhum dado encontrado'}), 404
+
+    except Exception as e:
+        error_message = str(e)
+        return jsonify({'status': 'error', 'message': 'Erro ao consultar as analíticas', 'error': error_message}), 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultado das Analíticas</title>
+</head>
+<body>
+
+    <h1>Resultado das Analíticas</h1>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Tipo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in data %}
+                <tr>
+                    <td>{{ record[0] }}</td>
+                    <td>{{ record[1] }}</td>
+                    <td>{{ record[2] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>

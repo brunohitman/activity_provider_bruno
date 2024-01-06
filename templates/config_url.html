@@ -9,7 +9,8 @@
 
     <h1>Minha Lista de Atividades</h1>
 
-    <form action="#" method="post">
+    <!-- Formulário para adicionar uma nova atividade -->
+    <form action="/POST" method="post">
         <label for="nomeAtividade">Nome Atividade:</label>
         <input type="text" id="nomeAtividade" name="nomeAtividade" required>
 
@@ -26,6 +27,11 @@
         <br>
 
         <input type="submit" value="Salvar">
+    </form>
+
+    <!-- Botão para consultar analíticas -->
+    <form action="/consultar_analiticas" method="get">
+        <input type="submit" value="Consultar Analíticas">
     </form>
 
 </body>
