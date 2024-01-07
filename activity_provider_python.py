@@ -2,8 +2,8 @@ from flask import Flask, render_template, jsonify, send_from_directory
 import json
 from GET import get_example as get_request
 from POST import post_example as post_request
+from postgres_fetcher import PostgreSQLFetcher
 import psycopg2
-from data_fetcher import fetch_data_from_db
 
 app = Flask(__name__)
 
@@ -60,8 +60,8 @@ def config_url():
 @app.route('/consultar_analiticas', methods=['GET'])
 def consultar_analiticas():
     try:
-        # Buscar dados do banco
-        data = fetch_data_from_db()
+        fetcher = PostgreSQLFetcher()
+        data = fetcher.fetch_data()
 
         if data:
             return render_template('resultado_analiticas.html', data=data)

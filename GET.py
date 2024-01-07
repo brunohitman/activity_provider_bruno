@@ -1,4 +1,6 @@
 from flask import jsonify
+import json
+
 
 # Função para lidar com requisições GET
 def get_example():
