@@ -3,6 +3,8 @@ import json
 from GET import get_example as get_request
 from POST import post_example as post_request
 from postgres_fetcher import PostgreSQLFetcher
+from DataFetcherBridge import DataFetcherBridge
+from postgres_fetcher import PostgreSQLFetcher
 import psycopg2
 
 app = Flask(__name__)
@@ -61,7 +63,9 @@ def config_url():
 def consultar_analiticas():
     try:
         fetcher = PostgreSQLFetcher()
-        data = fetcher.fetch_data()
+        bridge = DataFetcherBridge(fetcher)
+
+        data = bridge.fetch_data()
 
         if data:
             return render_template('resultado_analiticas.html', data=data)
