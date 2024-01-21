@@ -1,6 +1,6 @@
 # GET.py
 from flask import jsonify
-from get_command import GetCommand
+from interfaces.get_command import GetCommand
 
 # Função para lidar com requisições GET
 def get_example():
