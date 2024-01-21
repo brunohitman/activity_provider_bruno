@@ -1,6 +1,6 @@
 # POST.py
 from flask import Flask, jsonify
-from post_command import PostCommand
+from interfaces.post_command import PostCommand
 
 app = Flask(__name__)
 
